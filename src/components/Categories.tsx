@@ -34,6 +34,7 @@ const categories = [
     title: "Budgeting",
     description: "Expense trackers, savings goals, and financial planners",
     count: 20,
+    link: "https://docs.google.com/spreadsheets/d/1pE2EZjl0EIq-DxLsRs4ivfgcQWxYLcAAYRtC7aq2yf0/edit?usp=sharing",
   },
   {
     icon: Heart,
@@ -112,25 +113,34 @@ const Categories = () => {
           viewport={{ once: true }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {categories.map((category) => (
-            <motion.div
-              key={category.title}
-              variants={itemVariants}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group p-6 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-elevated transition-all duration-300 cursor-pointer"
-            >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                <category.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-serif text-xl font-medium mb-2">{category.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                {category.description}
-              </p>
-              <span className="text-xs font-medium text-primary">
-                {category.count} templates →
-              </span>
-            </motion.div>
-          ))}
+          {categories.map((category) => {
+            const CardWrapper = category.link ? 'a' : 'div';
+            const linkProps = category.link ? { href: category.link, target: "_blank", rel: "noopener noreferrer" } : {};
+            
+            return (
+              <motion.div
+                key={category.title}
+                variants={itemVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              >
+                <CardWrapper
+                  {...linkProps}
+                  className="group block p-6 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-elevated transition-all duration-300 cursor-pointer h-full"
+                >
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <category.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="font-serif text-xl font-medium mb-2">{category.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    {category.description}
+                  </p>
+                  <span className="text-xs font-medium text-primary">
+                    {category.count} templates →
+                  </span>
+                </CardWrapper>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>
