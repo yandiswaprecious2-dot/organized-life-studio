@@ -96,11 +96,11 @@ const Categories = () => {
             Template Categories
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-medium mb-6">
-            Templates for Every Journey
+            Templates for Every Chapter of Your Life
           </h2>
           <p className="text-muted-foreground text-lg">
-            Whether you're a student hustling through exams or a professional 
-            climbing the ladder, we have the perfect template for you.
+            From students navigating exams to professionals climbing the ladder, 
+            and visionaries inventing the extraordinary, discover templates thoughtfully designed for you.
           </p>
         </motion.div>
 

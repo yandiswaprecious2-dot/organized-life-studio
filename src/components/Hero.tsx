@@ -47,9 +47,9 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="font-sans text-lg md:text-xl text-muted-foreground max-w-xl mb-10 leading-relaxed"
           >
-            Beautiful, ready-to-use digital templates for students, professionals, 
-            and dreamers. From habit trackers to budget planners — organize every 
-            aspect of your life starting at just $4.
+            Exquisite, essential digital templates for students, professionals, 
+            and visionaries. From habit trackers to budget planners, organize every 
+            aspect of your life—and start living intentionally from just $4.
           </motion.p>
 
           {/* CTA Buttons */}
