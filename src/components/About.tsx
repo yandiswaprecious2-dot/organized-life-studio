@@ -17,11 +17,11 @@ const About = () => {
               Our Story
             </span>
             <h2 className="font-serif text-4xl md:text-5xl font-medium mb-6 leading-tight">
-              Hi, I'm <span className="text-gradient-crimson">Precious Planners.</span>
+              Hi <span className="text-gradient-crimson">Precious Planners,</span>
             </h2>
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                I bet we've all been there—that feeling where you have dreams, goals, 
+                I bet we've all been there, that feeling where you have dreams, goals, 
                 plans… but somehow the days slip by, and those ambitions stay just 
                 that: dreams. You set intentions, but keeping track of your habits, 
                 your finances, your priorities? That's a whole other story.
@@ -30,21 +30,21 @@ const About = () => {
                 Yep, that was me. I wanted to live an organized, intentional life, 
                 but nothing I tried really worked. I'd start planning, feel motivated, 
                 and then… life would happen. And I realized the problem wasn't my 
-                effort or my ambition—it was my habits. Motivation alone wasn't enough.
+                effort or my ambition, it was my habits. Motivation alone wasn't enough.
               </p>
               <p>
                 I needed a way to track my habits, my goals, my money, to hold myself 
                 accountable, and to finally see progress. So I created tools that 
-                worked for me—templates that helped me take action instead of letting 
+                worked for me, templates that helped me take action instead of letting 
                 my dreams sit on a list.
               </p>
               <p className="text-foreground font-medium">
                 And then it hit me: if I struggled like this, there are so many others 
                 who do too. People who have dreams and ambitions but feel held back 
                 because their life isn't organized. That's why Organized Life exists. 
-                Our templates are practical, simple, and beautiful—designed to help you 
+                Our templates are practical, simple, and beautiful, designed to help you 
                 track your life, stay accountable, and take action every day. Because 
-                organizing your life shouldn't be a dream—it should be something you 
+                organizing your life shouldn't be a dream, it should be something you 
                 can actually achieve.
               </p>
             </div>
