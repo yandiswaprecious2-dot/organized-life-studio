@@ -17,18 +17,21 @@ const categories = [
     title: "Students",
     description: "Study planners, assignment trackers, and exam schedules",
     count: 15,
+    link: "/templates/students",
   },
   {
     icon: Briefcase,
     title: "Professionals",
     description: "Project management, meeting notes, and career goals",
     count: 18,
+    link: "/templates/professionals",
   },
   {
     icon: TrendingUp,
     title: "Traders & Investors",
     description: "Trading journals, portfolio trackers, and analysis logs",
     count: 12,
+    link: "/templates/traders",
   },
   {
     icon: Wallet,
