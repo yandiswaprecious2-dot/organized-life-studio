@@ -9,6 +9,9 @@ import BudgetingTemplates from "./pages/BudgetingTemplates";
 import StudentsTemplates from "./pages/StudentsTemplates";
 import ProfessionalsTemplates from "./pages/ProfessionalsTemplates";
 import TradersTemplates from "./pages/TradersTemplates";
+import WellnessTemplates from "./pages/WellnessTemplates";
+import DailyPlanningTemplates from "./pages/DailyPlanningTemplates";
+import GoalSettingTemplates from "./pages/GoalSettingTemplates";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +29,9 @@ const App = () => (
             <Route path="/templates/students" element={<StudentsTemplates />} />
             <Route path="/templates/professionals" element={<ProfessionalsTemplates />} />
             <Route path="/templates/traders" element={<TradersTemplates />} />
+            <Route path="/templates/wellness" element={<WellnessTemplates />} />
+            <Route path="/templates/daily-planning" element={<DailyPlanningTemplates />} />
+            <Route path="/templates/goal-setting" element={<GoalSettingTemplates />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
