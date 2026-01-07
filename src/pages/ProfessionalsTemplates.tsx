@@ -6,145 +6,131 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
-const budgetingTemplates = [
+const professionalsTemplates = [
   {
     id: 1,
-    name: "Monthly Budget Planner Essential",
-    description: "A comprehensive monthly planner to track income, expenses, and savings goals.",
-    price: 5,
+    name: "Project Planner Overview",
+    description: "Get a bird's-eye view of your projects with comprehensive planning tools.",
+    price: 6,
     image: "/placeholder.svg",
   },
   {
     id: 2,
-    name: "Monthly Budget Planner Minimal",
-    description: "Clean, distraction-free layout for simple monthly budgeting.",
-    price: 4,
+    name: "Project Timeline Planner",
+    description: "Visualize project milestones and deadlines with timeline planning.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 3,
-    name: "Monthly Budget Planner Neutral",
-    description: "Elegant neutral tones for a calm budgeting experience.",
-    price: 4,
+    name: "Task & Priority Manager",
+    description: "Organize tasks by priority and manage your workload effectively.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 4,
-    name: "Expense Tracker Classic",
-    description: "Traditional expense tracking with categories and summaries.",
+    name: "Weekly Work Planner",
+    description: "Plan your work week with structured daily goals and priorities.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 5,
-    name: "Income & Expense Planner Standard",
-    description: "Balance your income against expenses with visual insights.",
-    price: 5,
+    name: "Daily Work Schedule",
+    description: "Structure your workday hour by hour for maximum productivity.",
+    price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 6,
-    name: "Bills & Subscriptions Planner",
-    description: "Never miss a payment with organized bill tracking.",
+    name: "Meeting Notes Planner",
+    description: "Capture meeting notes, action items, and follow-ups in one place.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 7,
-    name: "Debt Payoff Planner",
-    description: "Strategic debt elimination with progress tracking.",
+    name: "Client Meeting Notes",
+    description: "Professional client meeting documentation with agenda and outcomes.",
     price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 8,
-    name: "Savings Goal Planner",
-    description: "Set and achieve your savings milestones step by step.",
+    name: "Action Items Tracker",
+    description: "Track and manage action items across all your projects and meetings.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 9,
-    name: "Emergency Fund Planner",
-    description: "Build your financial safety net with guided planning.",
-    price: 4,
+    name: "Professional Goals Planner",
+    description: "Set and achieve your career goals with strategic planning.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 10,
-    name: "Lifestyle Budget Planner",
-    description: "Balance your lifestyle desires with smart budgeting.",
-    price: 5,
+    name: "Career Development Planner",
+    description: "Map out your career path with skills development and milestones.",
+    price: 6,
     image: "/placeholder.svg",
   },
   {
     id: 11,
-    name: "Self-Care & Wellness Budget",
-    description: "Invest in yourself without breaking the bank.",
-    price: 4,
+    name: "Performance Review Tracker",
+    description: "Prepare for reviews with documented achievements and feedback.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 12,
-    name: "Clothing & Personal Style Budget",
-    description: "Curate your wardrobe with intentional spending.",
-    price: 4,
+    name: "OKR Planning Template",
+    description: "Set and track Objectives and Key Results for quarterly planning.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 13,
-    name: "Home Essentials Budget",
-    description: "Plan and prioritize your home spending needs.",
-    price: 5,
+    name: "Team Collaboration Planner",
+    description: "Coordinate team projects with shared goals and responsibilities.",
+    price: 6,
     image: "/placeholder.svg",
   },
   {
     id: 14,
-    name: "Travel & Holiday Budget Planner",
-    description: "Dream trips made possible with smart budgeting.",
-    price: 6,
+    name: "Work Productivity Dashboard",
+    description: "Monitor your productivity metrics and optimize your work habits.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 15,
-    name: "Event Planning Budget",
-    description: "Birthdays, celebrations, and special moments planned perfectly.",
-    price: 5,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 16,
-    name: "Car & Transport Budget Planner",
-    description: "Manage vehicle costs, fuel, and maintenance expenses.",
+    name: "Decision Log & Notes",
+    description: "Document important decisions with context and reasoning.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
-    id: 17,
-    name: "Education & Skills Budget Planner",
-    description: "Invest in your growth with planned learning expenses.",
+    id: 16,
+    name: "Time Blocking Work Planner",
+    description: "Master time blocking with dedicated focus periods for deep work.",
     price: 5,
+    image: "/placeholder.svg",
+  },
+  {
+    id: 17,
+    name: "Business Strategy Planner",
+    description: "Develop and track your business strategy with actionable plans.",
+    price: 6,
     image: "/placeholder.svg",
   },
   {
     id: 18,
-    name: "Small Business Starter Budget",
-    description: "Launch your business with organized financial planning.",
-    price: 6,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 19,
-    name: "Annual Budget Overview",
-    description: "See the big picture with yearly financial planning.",
-    price: 6,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 20,
-    name: "Financial Reset Planner",
-    description: "Start fresh and rebuild your finances from the ground up.",
-    price: 5,
+    name: "End-of-Week Work Review",
+    description: "Reflect on your week, celebrate wins, and plan for improvement.",
+    price: 4,
     image: "/placeholder.svg",
   },
 ];
@@ -168,14 +154,14 @@ const itemVariants = {
   },
 };
 
-const BudgetingTemplates = () => {
+const ProfessionalsTemplates = () => {
   return (
     <>
       <Helmet>
-        <title>Budgeting Templates | Organized Life</title>
+        <title>Professionals Templates | Organized Life</title>
         <meta
           name="description"
-          content="Premium budgeting templates for expense tracking, savings goals, debt payoff, and financial planning. Starting at just $4."
+          content="Premium professional templates for project planning, meeting notes, career development, and work productivity. Starting at just $4."
         />
       </Helmet>
 
@@ -200,14 +186,14 @@ const BudgetingTemplates = () => {
               className="text-center max-w-2xl mx-auto mb-12"
             >
               <span className="text-sm font-medium uppercase tracking-widest text-primary mb-4 block">
-                Budgeting Collection
+                Professionals Collection
               </span>
               <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
-                Budgeting Templates
+                Professionals Templates
               </h1>
               <p className="text-muted-foreground text-lg">
-                Take control of your finances with beautifully designed budget planners, 
-                expense trackers, and savings tools.
+                Elevate your professional life with powerful planners, trackers, 
+                and tools designed for career success.
               </p>
             </motion.div>
 
@@ -218,7 +204,7 @@ const BudgetingTemplates = () => {
               animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {budgetingTemplates.map((template) => (
+              {professionalsTemplates.map((template) => (
                 <motion.div
                   key={template.id}
                   variants={itemVariants}
@@ -265,4 +251,4 @@ const BudgetingTemplates = () => {
   );
 };
 
-export default BudgetingTemplates;
+export default ProfessionalsTemplates;

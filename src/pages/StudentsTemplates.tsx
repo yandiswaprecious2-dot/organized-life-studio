@@ -6,145 +6,110 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
-const budgetingTemplates = [
+const studentsTemplates = [
   {
     id: 1,
-    name: "Monthly Budget Planner Essential",
-    description: "A comprehensive monthly planner to track income, expenses, and savings goals.",
+    name: "Academic Planner Semester Overview",
+    description: "Plan your entire semester with course schedules, deadlines, and key dates at a glance.",
     price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 2,
-    name: "Monthly Budget Planner Minimal",
-    description: "Clean, distraction-free layout for simple monthly budgeting.",
+    name: "Weekly Study Planner",
+    description: "Organize your weekly study sessions with time blocks and subject priorities.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 3,
-    name: "Monthly Budget Planner Neutral",
-    description: "Elegant neutral tones for a calm budgeting experience.",
+    name: "Daily Study Schedule",
+    description: "Structure each day for maximum productivity with hourly planning slots.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 4,
-    name: "Expense Tracker Classic",
-    description: "Traditional expense tracking with categories and summaries.",
+    name: "Assignment Tracker",
+    description: "Never miss a deadline with organized assignment tracking and status updates.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 5,
-    name: "Income & Expense Planner Standard",
-    description: "Balance your income against expenses with visual insights.",
+    name: "Exam Preparation Planner",
+    description: "Strategic exam prep with topic breakdowns and study milestones.",
     price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 6,
-    name: "Bills & Subscriptions Planner",
-    description: "Never miss a payment with organized bill tracking.",
+    name: "Revision Timetable",
+    description: "Create effective revision schedules with spaced repetition planning.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 7,
-    name: "Debt Payoff Planner",
-    description: "Strategic debt elimination with progress tracking.",
-    price: 5,
+    name: "Study Goals Planner",
+    description: "Set and track academic goals with actionable steps and progress monitoring.",
+    price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 8,
-    name: "Savings Goal Planner",
-    description: "Set and achieve your savings milestones step by step.",
+    name: "Coursework Deadline Tracker",
+    description: "Keep all your coursework deadlines organized in one central place.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 9,
-    name: "Emergency Fund Planner",
-    description: "Build your financial safety net with guided planning.",
-    price: 4,
+    name: "Lecture Notes Organizer",
+    description: "Structure and organize your lecture notes by subject and date.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 10,
-    name: "Lifestyle Budget Planner",
-    description: "Balance your lifestyle desires with smart budgeting.",
-    price: 5,
+    name: "Reading List & Study Log",
+    description: "Track your required readings and log your study progress.",
+    price: 4,
     image: "/placeholder.svg",
   },
   {
     id: 11,
-    name: "Self-Care & Wellness Budget",
-    description: "Invest in yourself without breaking the bank.",
-    price: 4,
+    name: "Productivity Study Planner",
+    description: "Maximize your study efficiency with productivity-focused planning tools.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 12,
-    name: "Clothing & Personal Style Budget",
-    description: "Curate your wardrobe with intentional spending.",
-    price: 4,
+    name: "GPA & Progress Tracker",
+    description: "Monitor your grades and academic progress throughout the year.",
+    price: 5,
     image: "/placeholder.svg",
   },
   {
     id: 13,
-    name: "Home Essentials Budget",
-    description: "Plan and prioritize your home spending needs.",
-    price: 5,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 14,
-    name: "Travel & Holiday Budget Planner",
-    description: "Dream trips made possible with smart budgeting.",
-    price: 6,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 15,
-    name: "Event Planning Budget",
-    description: "Birthdays, celebrations, and special moments planned perfectly.",
-    price: 5,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 16,
-    name: "Car & Transport Budget Planner",
-    description: "Manage vehicle costs, fuel, and maintenance expenses.",
+    name: "Exam Countdown Planner",
+    description: "Count down to exam day with daily tasks and preparation checkpoints.",
     price: 4,
     image: "/placeholder.svg",
   },
   {
-    id: 17,
-    name: "Education & Skills Budget Planner",
-    description: "Invest in your growth with planned learning expenses.",
+    id: 14,
+    name: "Study & Self-Care Balance Planner",
+    description: "Balance academic demands with personal wellbeing and rest.",
     price: 5,
     image: "/placeholder.svg",
   },
   {
-    id: 18,
-    name: "Small Business Starter Budget",
-    description: "Launch your business with organized financial planning.",
-    price: 6,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 19,
-    name: "Annual Budget Overview",
-    description: "See the big picture with yearly financial planning.",
-    price: 6,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 20,
-    name: "Financial Reset Planner",
-    description: "Start fresh and rebuild your finances from the ground up.",
-    price: 5,
+    id: 15,
+    name: "End-of-Term Review Planner",
+    description: "Reflect on your term, assess your performance, and plan for improvement.",
+    price: 4,
     image: "/placeholder.svg",
   },
 ];
@@ -168,14 +133,14 @@ const itemVariants = {
   },
 };
 
-const BudgetingTemplates = () => {
+const StudentsTemplates = () => {
   return (
     <>
       <Helmet>
-        <title>Budgeting Templates | Organized Life</title>
+        <title>Students Templates | Organized Life</title>
         <meta
           name="description"
-          content="Premium budgeting templates for expense tracking, savings goals, debt payoff, and financial planning. Starting at just $4."
+          content="Premium student templates for academic planning, study schedules, assignment tracking, and exam preparation. Starting at just $4."
         />
       </Helmet>
 
@@ -200,14 +165,14 @@ const BudgetingTemplates = () => {
               className="text-center max-w-2xl mx-auto mb-12"
             >
               <span className="text-sm font-medium uppercase tracking-widest text-primary mb-4 block">
-                Budgeting Collection
+                Students Collection
               </span>
               <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
-                Budgeting Templates
+                Students Templates
               </h1>
               <p className="text-muted-foreground text-lg">
-                Take control of your finances with beautifully designed budget planners, 
-                expense trackers, and savings tools.
+                Ace your studies with beautifully designed planners, trackers, 
+                and organizational tools built for academic success.
               </p>
             </motion.div>
 
@@ -218,7 +183,7 @@ const BudgetingTemplates = () => {
               animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {budgetingTemplates.map((template) => (
+              {studentsTemplates.map((template) => (
                 <motion.div
                   key={template.id}
                   variants={itemVariants}
@@ -265,4 +230,4 @@ const BudgetingTemplates = () => {
   );
 };
 
-export default BudgetingTemplates;
+export default StudentsTemplates;
