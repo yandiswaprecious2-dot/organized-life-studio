@@ -45,18 +45,21 @@ const categories = [
     title: "Wellness",
     description: "Habit trackers, workout logs, and self-care routines",
     count: 16,
+    link: "/templates/wellness",
   },
   {
     icon: Calendar,
     title: "Daily Planning",
     description: "Daily, weekly, and monthly planning templates",
     count: 22,
+    link: "/templates/daily-planning",
   },
   {
     icon: Target,
     title: "Goal Setting",
     description: "Vision boards, goal trackers, and milestone planners",
     count: 10,
+    link: "/templates/goal-setting",
   },
   {
     icon: Users,
