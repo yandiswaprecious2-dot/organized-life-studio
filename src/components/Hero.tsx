@@ -49,7 +49,7 @@ const Hero = () => {
           >
             Exquisite, essential digital templates for students, professionals, 
             and visionaries. From habit trackers to budget planners, organize every 
-            aspect of your life—and start living intentionally from just $4.
+            aspect of your life and start living intentionally from just $4.
           </motion.p>
 
           {/* CTA Buttons */}
