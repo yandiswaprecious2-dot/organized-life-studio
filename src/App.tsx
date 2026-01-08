@@ -12,6 +12,7 @@ import TradersTemplates from "./pages/TradersTemplates";
 import WellnessTemplates from "./pages/WellnessTemplates";
 import DailyPlanningTemplates from "./pages/DailyPlanningTemplates";
 import GoalSettingTemplates from "./pages/GoalSettingTemplates";
+import MarketersTemplates from "./pages/MarketersTemplates";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/templates/wellness" element={<WellnessTemplates />} />
             <Route path="/templates/daily-planning" element={<DailyPlanningTemplates />} />
             <Route path="/templates/goal-setting" element={<GoalSettingTemplates />} />
+            <Route path="/templates/marketers" element={<MarketersTemplates />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

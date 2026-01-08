@@ -66,6 +66,7 @@ const categories = [
     title: "Marketers",
     description: "Content calendars, campaign trackers, and analytics",
     count: 14,
+    link: "/templates/marketers",
   },
 ];
 
