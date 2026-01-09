@@ -27,7 +27,7 @@ const pricingTiers = [
       "Lifetime access",
       "Free updates",
     ],
-    popular: true,
+    popular: false,
     icon: Zap,
   },
   {
@@ -41,7 +41,7 @@ const pricingTiers = [
       "Lifetime access",
       "Priority support",
     ],
-    popular: false,
+    popular: true,
     icon: Star,
   },
 ];
@@ -88,7 +88,7 @@ const Pricing = () => {
               {tier.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wide">
-                    Best Value
+                    Premium
                   </span>
                 </div>
               )}
