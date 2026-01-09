@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Check, Star, Zap } from "lucide-react";
+import { Check, Star, Zap, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const pricingTiers = [
   {
@@ -15,6 +16,7 @@ const pricingTiers = [
     ],
     popular: false,
     icon: Star,
+    link: "/pricing/essential",
   },
   {
     name: "Core",
@@ -29,6 +31,7 @@ const pricingTiers = [
     ],
     popular: false,
     icon: Zap,
+    link: "/pricing/core",
   },
   {
     name: "Customized",
@@ -42,7 +45,8 @@ const pricingTiers = [
       "Priority support",
     ],
     popular: true,
-    icon: Star,
+    icon: Crown,
+    link: "/pricing/customized",
   },
 ];
 
@@ -155,8 +159,9 @@ const Pricing = () => {
                 variant={tier.popular ? "warm" : "hero"}
                 size="lg"
                 className="w-full"
+                asChild
               >
-                Browse Templates
+                <Link to={tier.link}>Browse Templates</Link>
               </Button>
             </motion.div>
           ))}

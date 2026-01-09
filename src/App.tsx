@@ -13,6 +13,9 @@ import WellnessTemplates from "./pages/WellnessTemplates";
 import DailyPlanningTemplates from "./pages/DailyPlanningTemplates";
 import GoalSettingTemplates from "./pages/GoalSettingTemplates";
 import MarketersTemplates from "./pages/MarketersTemplates";
+import EssentialTemplates from "./pages/EssentialTemplates";
+import CoreTemplates from "./pages/CoreTemplates";
+import CustomizedTemplates from "./pages/CustomizedTemplates";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +37,9 @@ const App = () => (
             <Route path="/templates/daily-planning" element={<DailyPlanningTemplates />} />
             <Route path="/templates/goal-setting" element={<GoalSettingTemplates />} />
             <Route path="/templates/marketers" element={<MarketersTemplates />} />
+            <Route path="/pricing/essential" element={<EssentialTemplates />} />
+            <Route path="/pricing/core" element={<CoreTemplates />} />
+            <Route path="/pricing/customized" element={<CustomizedTemplates />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
