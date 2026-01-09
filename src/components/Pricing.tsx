@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const pricingTiers = [
   {
-    name: "Single Template",
+    name: "Essential",
     price: "$4",
     description: "Perfect for trying out a specific planner",
     features: [
@@ -17,18 +17,32 @@ const pricingTiers = [
     icon: Star,
   },
   {
-    name: "Bundle Pack",
-    price: "$6",
-    description: "Get more value with themed bundles",
+    name: "Core",
+    price: "$5",
+    description: "Most popular choice for productivity",
     features: [
-      "3-5 related templates",
+      "2-3 related templates",
       "Matching aesthetic design",
+      "Instant download",
+      "Lifetime access",
+      "Free updates",
+    ],
+    popular: true,
+    icon: Zap,
+  },
+  {
+    name: "Customized",
+    price: "$6",
+    description: "Get the complete themed bundle",
+    features: [
+      "4-5 premium templates",
+      "Full collection access",
       "Instant download",
       "Lifetime access",
       "Priority support",
     ],
-    popular: true,
-    icon: Zap,
+    popular: false,
+    icon: Star,
   },
 ];
 
@@ -57,7 +71,7 @@ const Pricing = () => {
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {pricingTiers.map((tier, index) => (
             <motion.div
               key={tier.name}
