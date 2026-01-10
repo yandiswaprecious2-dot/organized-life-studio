@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 
@@ -59,9 +60,11 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Button variant="hero" size="xl" className="group">
-              Explore Templates
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <Button variant="hero" size="xl" className="group" asChild>
+              <Link to="/browse">
+                Explore Templates
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
             <Button variant="hero-outline" size="xl">
               See How It Works

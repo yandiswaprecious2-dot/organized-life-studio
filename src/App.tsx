@@ -16,6 +16,7 @@ import MarketersTemplates from "./pages/MarketersTemplates";
 import EssentialTemplates from "./pages/EssentialTemplates";
 import CoreTemplates from "./pages/CoreTemplates";
 import CustomizedTemplates from "./pages/CustomizedTemplates";
+import BrowseTemplates from "./pages/BrowseTemplates";
 import MonthlyBudgetPlannerEssential from "./pages/templates/MonthlyBudgetPlannerEssential";
 import NotFound from "./pages/NotFound";
 
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/pricing/essential" element={<EssentialTemplates />} />
             <Route path="/pricing/core" element={<CoreTemplates />} />
             <Route path="/pricing/customized" element={<CustomizedTemplates />} />
+            <Route path="/browse" element={<BrowseTemplates />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
