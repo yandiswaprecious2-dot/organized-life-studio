@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -43,8 +44,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="hero" size="lg">
-              Browse Templates
+            <Button variant="hero" size="lg" asChild>
+              <Link to="/browse">Browse Templates</Link>
             </Button>
           </div>
 
@@ -77,8 +78,8 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <Button variant="hero" size="lg" className="mt-2">
-                Browse Templates
+              <Button variant="hero" size="lg" className="mt-2" asChild>
+                <Link to="/browse">Browse Templates</Link>
               </Button>
             </div>
           </motion.nav>
