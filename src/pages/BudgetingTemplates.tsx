@@ -13,6 +13,7 @@ const budgetingTemplates = [
     description: "A comprehensive monthly planner to track income, expenses, and savings goals.",
     price: 5,
     image: "/placeholder.svg",
+    slug: "monthly-budget-planner-essential",
   },
   {
     id: 2,
@@ -218,44 +219,54 @@ const BudgetingTemplates = () => {
               animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {budgetingTemplates.map((template) => (
-                <motion.div
-                  key={template.id}
-                  variants={itemVariants}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
-                >
-                  {/* Template Preview Image */}
-                  <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
-                    <img
-                      src={template.image}
-                      alt={template.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Template Info */}
-                  <div className="p-5">
-                    <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                      {template.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {template.description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-semibold text-primary">
-                        ${template.price}
-                      </span>
-                      <Button size="sm" className="gap-2">
-                        <ShoppingCart className="w-4 h-4" />
-                        Get Access
-                      </Button>
+              {budgetingTemplates.map((template) => {
+                const TemplateCard = (
+                  <motion.div
+                    key={template.id}
+                    variants={itemVariants}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
+                  >
+                    {/* Template Preview Image */}
+                    <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
+                      <img
+                        src={template.image}
+                        alt={template.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Template Info */}
+                    <div className="p-5">
+                      <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        {template.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                        {template.description}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-semibold text-primary">
+                          ${template.price}
+                        </span>
+                        <Button size="sm" className="gap-2">
+                          <ShoppingCart className="w-4 h-4" />
+                          Get Access
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+
+                return template.slug ? (
+                  <Link key={template.id} to={`/templates/budgeting/${template.slug}`}>
+                    {TemplateCard}
+                  </Link>
+                ) : (
+                  TemplateCard
+                );
+              })}
             </motion.div>
           </div>
         </main>

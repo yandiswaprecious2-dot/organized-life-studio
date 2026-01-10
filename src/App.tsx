@@ -16,6 +16,7 @@ import MarketersTemplates from "./pages/MarketersTemplates";
 import EssentialTemplates from "./pages/EssentialTemplates";
 import CoreTemplates from "./pages/CoreTemplates";
 import CustomizedTemplates from "./pages/CustomizedTemplates";
+import MonthlyBudgetPlannerEssential from "./pages/templates/MonthlyBudgetPlannerEssential";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/templates/budgeting" element={<BudgetingTemplates />} />
+            <Route path="/templates/budgeting/monthly-budget-planner-essential" element={<MonthlyBudgetPlannerEssential />} />
             <Route path="/templates/students" element={<StudentsTemplates />} />
             <Route path="/templates/professionals" element={<ProfessionalsTemplates />} />
             <Route path="/templates/traders" element={<TradersTemplates />} />
