@@ -90,15 +90,13 @@ const MonthlyBudgetPlannerEssential = () => {
 
                 <div className="prose prose-muted max-w-none">
                   <p className="text-muted-foreground text-lg leading-relaxed">
-                    A beautifully crafted budget planner designed to bring clarity and intention 
-                    to your financial journey. This Essential edition features twelve dedicated 
-                    monthly sheets, empowering you to thoughtfully track income, manage expenses, 
-                    monitor bills and debts, and nurture your savings goals—all within one 
-                    elegantly organized system.
+                    An exquisitely hand-designed budget planner crafted to simplify your financial 
+                    journey. Thoughtfully structured to help you track income, manage expenses, 
+                    and grow your savings with clarity and ease.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Perfect for individuals seeking a complete, ready-to-use budgeting solution 
-                    that transforms financial management into a calm, purposeful practice.
+                    Perfect for anyone seeking a seamless, ready-to-use system that turns 
+                    budgeting into a calm and purposeful practice.
                   </p>
                 </div>
 
@@ -133,19 +131,10 @@ const MonthlyBudgetPlannerEssential = () => {
                 <div className="bg-muted/30 border border-border/50 rounded-xl p-4 mt-6">
                   <h4 className="font-medium text-sm mb-2">After Payment</h4>
                   <p className="text-sm text-muted-foreground">
-                    Once your payment is complete, you'll receive instant access to the Google Sheet. 
+                    Once your payment is complete, you'll receive instant access to the template. 
                     Simply click <strong>"Make a copy"</strong> to save it to your own Google Drive 
                     and start organizing your finances.
                   </p>
-                  <a
-                    href={GOOGLE_SHEET_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary hover:underline text-sm mt-3"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Access Template (after payment)
-                  </a>
                 </div>
               </motion.div>
             </div>
