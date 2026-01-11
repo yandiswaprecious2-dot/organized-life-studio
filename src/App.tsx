@@ -18,6 +18,7 @@ import CoreTemplates from "./pages/CoreTemplates";
 import CustomizedTemplates from "./pages/CustomizedTemplates";
 import BrowseTemplates from "./pages/BrowseTemplates";
 import MonthlyBudgetPlannerEssential from "./pages/templates/MonthlyBudgetPlannerEssential";
+import ExpenseTrackerClassic from "./pages/templates/ExpenseTrackerClassic";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/templates/budgeting" element={<BudgetingTemplates />} />
             <Route path="/templates/budgeting/monthly-budget-planner-essential" element={<MonthlyBudgetPlannerEssential />} />
+            <Route path="/templates/budgeting/expense-tracker-classic" element={<ExpenseTrackerClassic />} />
             <Route path="/templates/students" element={<StudentsTemplates />} />
             <Route path="/templates/professionals" element={<ProfessionalsTemplates />} />
             <Route path="/templates/traders" element={<TradersTemplates />} />

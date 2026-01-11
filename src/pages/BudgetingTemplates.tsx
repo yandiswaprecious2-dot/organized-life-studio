@@ -35,6 +35,7 @@ const budgetingTemplates = [
     description: "Traditional expense tracking with categories and summaries.",
     price: 4,
     image: "/placeholder.svg",
+    slug: "expense-tracker-classic",
   },
   {
     id: 5,
