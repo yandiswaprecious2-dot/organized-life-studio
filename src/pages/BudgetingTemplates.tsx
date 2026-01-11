@@ -29,6 +29,7 @@ const budgetingTemplates = [
     description: "Elegant neutral tones for a calm budgeting experience.",
     price: 4,
     image: "/placeholder.svg",
+    slug: "monthly-budget-planner-neutral",
   },
   {
     id: 4,
