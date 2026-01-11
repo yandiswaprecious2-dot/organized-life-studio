@@ -21,6 +21,7 @@ const budgetingTemplates = [
     description: "Clean, distraction-free layout for simple monthly budgeting.",
     price: 4,
     image: "/placeholder.svg",
+    slug: "monthly-budget-planner-minimal",
   },
   {
     id: 3,
