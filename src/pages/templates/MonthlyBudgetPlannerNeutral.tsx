@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import previewImage from "@/assets/templates/monthly-budget-planner-neutral.png";
 
 const PAYPAL_LINK = "https://www.paypal.com/ncp/payment/G5P6YJS2WZETL";
 
@@ -53,11 +54,12 @@ const MonthlyBudgetPlannerNeutral = () => {
                 transition={{ duration: 0.5 }}
                 className="relative"
               >
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-border/50 shadow-elevated bg-card flex items-center justify-center">
-                  <div className="text-muted-foreground text-center p-8">
-                    <p className="text-lg font-medium">Preview Image</p>
-                    <p className="text-sm">Coming Soon</p>
-                  </div>
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-border/50 shadow-elevated bg-card">
+                  <img 
+                    src={previewImage} 
+                    alt="Monthly Budget Planner Neutral Preview" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
               </motion.div>
