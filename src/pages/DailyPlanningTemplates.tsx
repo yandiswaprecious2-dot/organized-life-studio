@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import RequestOrderModal from "@/components/RequestOrderModal";
 
 const dailyPlanningTemplates = [
   { id: 1, name: "Daily Planner Habits & Tasks", description: "Combine habit tracking with daily task management.", price: 4, image: "/placeholder.svg" },
@@ -51,6 +53,14 @@ const itemVariants = {
 };
 
 const DailyPlanningTemplates = () => {
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [selectedTemplateName, setSelectedTemplateName] = useState("");
+
+  const handleRequestOrder = (templateName: string) => {
+    setSelectedTemplateName(templateName);
+    setRequestModalOpen(true);
+  };
+
   return (
     <>
       <Helmet>
@@ -130,9 +140,14 @@ const DailyPlanningTemplates = () => {
                       <span className="text-xl font-semibold text-primary">
                         ${template.price}
                       </span>
-                      <Button size="sm" className="gap-2">
-                        <ShoppingCart className="w-4 h-4" />
-                        Get Access
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="gap-2"
+                        onClick={() => handleRequestOrder(template.name)}
+                      >
+                        <Send className="w-4 h-4" />
+                        Request Order
                       </Button>
                     </div>
                   </div>
@@ -143,6 +158,12 @@ const DailyPlanningTemplates = () => {
         </main>
         <Footer />
       </div>
+
+      <RequestOrderModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        templateName={selectedTemplateName}
+      />
     </>
   );
 };

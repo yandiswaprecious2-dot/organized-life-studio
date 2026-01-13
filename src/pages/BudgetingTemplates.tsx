@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import RequestOrderModal from "@/components/RequestOrderModal";
+import { isTemplatePurchasable, getTemplateImage } from "@/data/templateImages";
 
 const budgetingTemplates = [
   {
@@ -173,6 +176,14 @@ const itemVariants = {
 };
 
 const BudgetingTemplates = () => {
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [selectedTemplateName, setSelectedTemplateName] = useState("");
+
+  const handleRequestOrder = (templateName: string) => {
+    setSelectedTemplateName(templateName);
+    setRequestModalOpen(true);
+  };
+
   return (
     <>
       <Helmet>
@@ -223,6 +234,9 @@ const BudgetingTemplates = () => {
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               {budgetingTemplates.map((template) => {
+                const isPurchasable = isTemplatePurchasable(template.slug);
+                const previewImage = getTemplateImage(template.slug);
+                
                 const TemplateCard = (
                   <motion.div
                     key={template.id}
@@ -233,7 +247,7 @@ const BudgetingTemplates = () => {
                     {/* Template Preview Image */}
                     <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
                       <img
-                        src={template.image}
+                        src={previewImage || template.image}
                         alt={template.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -253,21 +267,37 @@ const BudgetingTemplates = () => {
                         <span className="text-xl font-semibold text-primary">
                           ${template.price}
                         </span>
-                        <Button size="sm" className="gap-2">
-                          <ShoppingCart className="w-4 h-4" />
-                          Get Access
-                        </Button>
+                        {isPurchasable ? (
+                          <Button size="sm" className="gap-2">
+                            <ShoppingCart className="w-4 h-4" />
+                            Get Access
+                          </Button>
+                        ) : (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="gap-2"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleRequestOrder(template.name);
+                            }}
+                          >
+                            <Send className="w-4 h-4" />
+                            Request Order
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </motion.div>
                 );
 
-                return template.slug ? (
+                return isPurchasable && template.slug ? (
                   <Link key={template.id} to={`/templates/budgeting/${template.slug}`}>
                     {TemplateCard}
                   </Link>
                 ) : (
-                  TemplateCard
+                  <div key={template.id}>{TemplateCard}</div>
                 );
               })}
             </motion.div>
@@ -275,6 +305,12 @@ const BudgetingTemplates = () => {
         </main>
         <Footer />
       </div>
+
+      <RequestOrderModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        templateName={selectedTemplateName}
+      />
     </>
   );
 };
