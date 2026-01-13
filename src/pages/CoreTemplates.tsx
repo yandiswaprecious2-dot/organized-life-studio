@@ -1,10 +1,18 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import RequestOrderModal from "@/components/RequestOrderModal";
+import { isTemplatePurchasable, getTemplateImage, purchasableTemplates } from "@/data/templateImages";
+
+// Mapping of template names to their slugs
+const templateSlugs: Record<string, string> = {
+  "Monthly Budget Planner Essential": "monthly-budget-planner-essential",
+};
 
 // All $5 templates from all categories
 const coreTemplates = [
@@ -104,6 +112,14 @@ const itemVariants = {
 };
 
 const CoreTemplates = () => {
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [selectedTemplateName, setSelectedTemplateName] = useState("");
+
+  const handleRequestOrder = (templateName: string) => {
+    setSelectedTemplateName(templateName);
+    setRequestModalOpen(true);
+  };
+
   return (
     <>
       <Helmet>
@@ -155,54 +171,90 @@ const CoreTemplates = () => {
               animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {coreTemplates.map((template) => (
-                <motion.div
-                  key={template.id}
-                  variants={itemVariants}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
-                >
-                  {/* Template Preview Image */}
-                  <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
-                    <img
-                      src={template.image}
-                      alt={template.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2 py-1 bg-background/90 backdrop-blur-sm text-xs font-medium rounded-full">
-                        {template.category}
-                      </span>
+              {coreTemplates.map((template) => {
+                const slug = templateSlugs[template.name];
+                const isPurchasable = isTemplatePurchasable(slug);
+                const previewImage = getTemplateImage(slug);
+                
+                const TemplateCard = (
+                  <motion.div
+                    key={template.id}
+                    variants={itemVariants}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
+                  >
+                    {/* Template Preview Image */}
+                    <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
+                      <img
+                        src={previewImage || template.image}
+                        alt={template.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 left-3">
+                        <span className="px-2 py-1 bg-background/90 backdrop-blur-sm text-xs font-medium rounded-full">
+                          {template.category}
+                        </span>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
 
-                  {/* Template Info */}
-                  <div className="p-5">
-                    <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                      {template.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {template.description}
-                    </p>
+                    {/* Template Info */}
+                    <div className="p-5">
+                      <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        {template.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                        {template.description}
+                      </p>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-semibold text-primary">
-                        ${template.price}
-                      </span>
-                      <Button size="sm" className="gap-2">
-                        <ShoppingCart className="w-4 h-4" />
-                        Get Access
-                      </Button>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-semibold text-primary">
+                          ${template.price}
+                        </span>
+                        {isPurchasable ? (
+                          <Button size="sm" className="gap-2">
+                            <ShoppingCart className="w-4 h-4" />
+                            Get Access
+                          </Button>
+                        ) : (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="gap-2"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleRequestOrder(template.name);
+                            }}
+                          >
+                            <Send className="w-4 h-4" />
+                            Request Order
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+
+                return isPurchasable && slug ? (
+                  <Link key={template.id} to={`/templates/budgeting/${slug}`}>
+                    {TemplateCard}
+                  </Link>
+                ) : (
+                  <div key={template.id}>{TemplateCard}</div>
+                );
+              })}
             </motion.div>
           </div>
         </main>
         <Footer />
       </div>
+
+      <RequestOrderModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        templateName={selectedTemplateName}
+      />
     </>
   );
 };
