@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import RequestOrderModal from "@/components/RequestOrderModal";
+import { isTemplatePurchasable, getTemplateImage } from "@/data/templateImages";
 
 const marketersTemplates = [
   { id: 1, name: "Content Calendar Planner", description: "Plan and organize your content across all platforms with ease.", price: 5, image: "/placeholder.svg" },
@@ -43,6 +46,14 @@ const itemVariants = {
 };
 
 const MarketersTemplates = () => {
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [selectedTemplateName, setSelectedTemplateName] = useState("");
+
+  const handleRequestOrder = (templateName: string) => {
+    setSelectedTemplateName(templateName);
+    setRequestModalOpen(true);
+  };
+
   return (
     <>
       <Helmet>
@@ -92,49 +103,73 @@ const MarketersTemplates = () => {
               animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {marketersTemplates.map((template) => (
-                <motion.div
-                  key={template.id}
-                  variants={itemVariants}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
-                >
-                  {/* Template Preview Image */}
-                  <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
-                    <img
-                      src={template.image}
-                      alt={template.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Template Info */}
-                  <div className="p-5">
-                    <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                      {template.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {template.description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-semibold text-primary">
-                        ${template.price}
-                      </span>
-                      <Button size="sm" className="gap-2">
-                        <ShoppingCart className="w-4 h-4" />
-                        Get Access
-                      </Button>
+              {marketersTemplates.map((template) => {
+                const slug = template.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                const isPurchasable = isTemplatePurchasable(slug);
+                const previewImage = getTemplateImage(slug);
+                
+                return (
+                  <motion.div
+                    key={template.id}
+                    variants={itemVariants}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="group bg-card rounded-xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-elevated transition-all duration-300"
+                  >
+                    {/* Template Preview Image */}
+                    <div className="aspect-[4/3] bg-muted/50 relative overflow-hidden">
+                      <img
+                        src={previewImage || template.image}
+                        alt={template.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Template Info */}
+                    <div className="p-5">
+                      <h3 className="font-serif text-lg font-medium mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        {template.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                        {template.description}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-semibold text-primary">
+                          ${template.price}
+                        </span>
+                        {isPurchasable ? (
+                          <Button size="sm" className="gap-2">
+                            <ShoppingCart className="w-4 h-4" />
+                            Get Access
+                          </Button>
+                        ) : (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="gap-2"
+                            onClick={() => handleRequestOrder(template.name)}
+                          >
+                            <Send className="w-4 h-4" />
+                            Request Order
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
         </main>
         <Footer />
       </div>
+
+      <RequestOrderModal
+        isOpen={requestModalOpen}
+        onClose={() => setRequestModalOpen(false)}
+        templateName={selectedTemplateName}
+      />
     </>
   );
 };
