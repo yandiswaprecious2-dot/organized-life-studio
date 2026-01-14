@@ -71,28 +71,6 @@ const Hero = () => {
             </Button>
           </motion.div>
 
-          {/* Social Proof */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-16 flex items-center gap-6"
-          >
-            <div className="flex -space-x-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full bg-warm-sand border-2 border-background flex items-center justify-center text-xs font-medium text-foreground"
-                >
-                  {String.fromCharCode(64 + i)}
-                </div>
-              ))}
-            </div>
-            <div>
-              <p className="text-sm font-medium text-foreground">500+ happy planners</p>
-              <p className="text-xs text-muted-foreground">Join our growing community</p>
-            </div>
-          </motion.div>
         </div>
       </div>
 
