@@ -1,6 +1,15 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const RESEND_API_KEY = (Deno.env.get("RESEND_API_KEY") ?? "").trim();
+const normalizeResendApiKey = (raw?: string | null) => {
+  let key = (raw ?? "").trim();
+  // Users sometimes paste `Bearer <key>`; Resend expects the raw key only.
+  key = key.replace(/^Bearer\s+/i, "");
+  // Remove accidental wrapping quotes.
+  key = key.replace(/^['\"]|['\"]$/g, "");
+  return key.trim();
+};
+
+const RESEND_API_KEY = normalizeResendApiKey(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -81,8 +90,22 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     if (!ownerEmailRes.ok) {
-      const error = await ownerEmailRes.text();
-      throw new Error(`Failed to send owner email: ${error}`);
+      const errorText = await ownerEmailRes.text();
+
+      if (ownerEmailRes.status === 401) {
+        return new Response(
+          JSON.stringify({
+            error:
+              "Email service authentication failed (invalid RESEND_API_KEY). Please generate a new API key and paste ONLY the key (starts with re_), without 'Bearer' or quotes.",
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json", ...corsHeaders },
+          }
+        );
+      }
+
+      throw new Error(`Failed to send owner email: ${errorText}`);
     }
 
     // Send confirmation email to customer
