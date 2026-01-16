@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,6 +49,11 @@ const RequestOrderModal = ({ isOpen, onClose, templateName }: RequestOrderModalP
       note: "",
     },
   });
+
+  // Sync templateName when it changes
+  useEffect(() => {
+    form.setValue("templateName", templateName);
+  }, [templateName, form]);
 
   const onSubmit = async (data: OrderFormData) => {
     setIsSubmitting(true);
