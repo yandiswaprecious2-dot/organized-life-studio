@@ -6,10 +6,13 @@ const normalizeResendApiKey = (raw?: string | null) => {
   key = key.replace(/^Bearer\s+/i, "");
   // Remove accidental wrapping quotes.
   key = key.replace(/^['\"]|['\"]$/g, "");
-  return key.trim();
+  // Remove any whitespace/newlines that can sneak in during copy/paste.
+  key = key.replace(/\s+/g, "");
+  return key;
 };
 
-const RESEND_API_KEY = normalizeResendApiKey(Deno.env.get("RESEND_API_KEY"));
+const getResendApiKey = () => normalizeResendApiKey(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = getResendApiKey();
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
