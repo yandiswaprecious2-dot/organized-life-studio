@@ -48,6 +48,11 @@ const handler = async (req: Request): Promise<Response> => {
         JSON.stringify({
           error:
             "Email service is not configured (missing RESEND_API_KEY). Please update the key and try again.",
+          debug: {
+            resendKeyLength: 0,
+            resendKeyPrefix: "",
+            resendKeyLooksValid: false,
+          },
         }),
         {
           status: 500,
@@ -107,8 +112,14 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response(
           JSON.stringify({
             error:
-              "Email service rejected the request (401). This is typically an invalid RESEND_API_KEY OR an unauthorized sender address/domain.",
+              "Email service rejected the request (401). The Resend API key being used by the backend appears invalid.",
             resendError: safeJsonParse(errorText),
+            debug: {
+              resendKeyPrefix: RESEND_API_KEY.slice(0, 3),
+              resendKeyLength: RESEND_API_KEY.length,
+              resendKeyLooksValid:
+                RESEND_API_KEY.startsWith("re_") && RESEND_API_KEY.length >= 10,
+            },
           }),
           {
             status: 500,
