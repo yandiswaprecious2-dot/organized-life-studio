@@ -28,6 +28,14 @@ interface OrderRequestPayload {
 
 const OWNER_EMAIL = "yandiswaprecious2@gmail.com";
 
+const safeJsonParse = (input: string) => {
+  try {
+    return JSON.parse(input);
+  } catch {
+    return input;
+  }
+};
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -85,7 +93,7 @@ const handler = async (req: Request): Promise<Response> => {
           <h2>New Template Order Request</h2>
           <p><strong>Template:</strong> ${templateName}</p>
           <p><strong>Customer Email:</strong> ${email}</p>
-          ${note ? `<p><strong>Note:</strong> ${note}</p>` : ''}
+          ${note ? `<p><strong>Note:</strong> ${note}</p>` : ""}
           <hr>
           <p style="color: #666; font-size: 12px;">This request was submitted through the Organized Life website.</p>
         `,
@@ -99,7 +107,8 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response(
           JSON.stringify({
             error:
-              "Email service authentication failed (invalid RESEND_API_KEY). Please generate a new API key and paste ONLY the key (starts with re_), without 'Bearer' or quotes.",
+              "Email service rejected the request (401). This is typically an invalid RESEND_API_KEY OR an unauthorized sender address/domain.",
+            resendError: safeJsonParse(errorText),
           }),
           {
             status: 500,
@@ -126,7 +135,7 @@ const handler = async (req: Request): Promise<Response> => {
           <h2>Thank you for your interest!</h2>
           <p>We've received your request for the <strong>${templateName}</strong> template.</p>
           <p>Our team will review your request and get back to you shortly with payment details and access instructions.</p>
-          ${note ? `<p><strong>Your note:</strong> ${note}</p>` : ''}
+          ${note ? `<p><strong>Your note:</strong> ${note}</p>` : ""}
           <hr>
           <p style="color: #666; font-size: 12px;">Best regards,<br>The Organized Life Team</p>
         `,
@@ -134,7 +143,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     if (!customerEmailRes.ok) {
-      console.error("Customer confirmation email failed but owner was notified");
+      console.error(
+        "Customer confirmation email failed but owner was notified:",
+        await customerEmailRes.text()
+      );
     }
 
     console.log("Order request emails sent successfully");
@@ -148,13 +160,10 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error in send-order-request function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   }
 };
 
