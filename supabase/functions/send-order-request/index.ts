@@ -28,6 +28,40 @@ interface OrderRequestPayload {
 
 const OWNER_EMAIL = "yandiswaprecious2@gmail.com";
 
+// Simple in-memory rate limiting (per IP, 5 requests per hour)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+
+function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return { allowed: true, remaining: RATE_LIMIT - 1 };
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    return { allowed: false, remaining: 0 };
+  }
+
+  record.count++;
+  return { allowed: true, remaining: RATE_LIMIT - record.count };
+}
+
+// HTML escape function to prevent XSS in email content
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
 const safeJsonParse = (input: string) => {
   try {
     return JSON.parse(input);
@@ -43,6 +77,27 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Rate limiting check
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+                     req.headers.get("x-real-ip") ||
+                     "unknown";
+    const { allowed, remaining } = checkRateLimit(clientIp);
+
+    if (!allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIp}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { 
+            "Content-Type": "application/json",
+            "X-RateLimit-Remaining": "0",
+            ...corsHeaders 
+          },
+        }
+      );
+    }
+
     if (!RESEND_API_KEY) {
       return new Response(
         JSON.stringify({
@@ -83,6 +138,25 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
+    // Additional server-side validation: max lengths
+    if (templateName.length > 200) {
+      return new Response(JSON.stringify({ error: "Template name too long" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+    if (note && note.length > 1000) {
+      return new Response(JSON.stringify({ error: "Note too long" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Escape user inputs to prevent XSS in emails
+    const safeTemplateName = escapeHtml(templateName);
+    const safeEmail = escapeHtml(email);
+    const safeNote = note ? escapeHtml(note) : null;
+
     // Send email to owner
     const ownerEmailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -93,12 +167,12 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Organized Life <onboarding@resend.dev>",
         to: [OWNER_EMAIL],
-        subject: `New Template Order Request: ${templateName}`,
+        subject: `New Template Order Request: ${safeTemplateName}`,
         html: `
           <h2>New Template Order Request</h2>
-          <p><strong>Template:</strong> ${templateName}</p>
-          <p><strong>Customer Email:</strong> ${email}</p>
-          ${note ? `<p><strong>Note:</strong> ${note}</p>` : ""}
+          <p><strong>Template:</strong> ${safeTemplateName}</p>
+          <p><strong>Customer Email:</strong> ${safeEmail}</p>
+          ${safeNote ? `<p><strong>Note:</strong> ${safeNote}</p>` : ""}
           <hr>
           <p style="color: #666; font-size: 12px;">This request was submitted through the Organized Life website.</p>
         `,
@@ -141,12 +215,12 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Organized Life <onboarding@resend.dev>",
         to: [email],
-        subject: `Order Request Received: ${templateName}`,
+        subject: `Order Request Received: ${safeTemplateName}`,
         html: `
           <h2>Thank you for your interest!</h2>
-          <p>We've received your request for the <strong>${templateName}</strong> template.</p>
+          <p>We've received your request for the <strong>${safeTemplateName}</strong> template.</p>
           <p>Our team will review your request and get back to you shortly with payment details and access instructions.</p>
-          ${note ? `<p><strong>Your note:</strong> ${note}</p>` : ""}
+          ${safeNote ? `<p><strong>Your note:</strong> ${safeNote}</p>` : ""}
           <hr>
           <p style="color: #666; font-size: 12px;">Best regards,<br>The Organized Life Team</p>
         `,
