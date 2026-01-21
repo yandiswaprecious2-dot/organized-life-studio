@@ -66,9 +66,6 @@ const Hero = () => {
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-            <Button variant="hero-outline" size="xl">
-              See How It Works
-            </Button>
           </motion.div>
 
         </div>
