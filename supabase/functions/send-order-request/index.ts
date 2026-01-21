@@ -12,7 +12,6 @@ const normalizeResendApiKey = (raw?: string | null) => {
 };
 
 const getResendApiKey = () => normalizeResendApiKey(Deno.env.get("RESEND_API_KEY"));
-const RESEND_API_KEY = getResendApiKey();
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -77,6 +76,9 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Read secret at request time (also forces a fresh boot to pick up secret updates).
+    const RESEND_API_KEY = getResendApiKey();
+
     // Rate limiting check
     const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
                      req.headers.get("x-real-ip") ||
@@ -181,6 +183,30 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!ownerEmailRes.ok) {
       const errorText = await ownerEmailRes.text();
+
+      // Some Resend errors return 400 instead of 401 for invalid keys.
+      if (
+        ownerEmailRes.status === 401 ||
+        (ownerEmailRes.status === 400 && /api key is invalid/i.test(errorText))
+      ) {
+        return new Response(
+          JSON.stringify({
+            error:
+              "Email service rejected the request. The configured Resend API key appears invalid. Please generate a fresh key and update RESEND_API_KEY.",
+            resendError: safeJsonParse(errorText),
+            debug: {
+              resendKeyPrefix: RESEND_API_KEY.slice(0, 3),
+              resendKeyLength: RESEND_API_KEY.length,
+              resendKeyLooksValid:
+                RESEND_API_KEY.startsWith("re_") && RESEND_API_KEY.length >= 10,
+            },
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json", ...corsHeaders },
+          }
+        );
+      }
 
       if (ownerEmailRes.status === 401) {
         return new Response(
