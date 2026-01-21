@@ -8,9 +8,9 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Templates", href: "#templates" },
-    { label: "About", href: "#about" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Templates", href: "/#templates" },
+    { label: "About", href: "/#about" },
+    { label: "Pricing", href: "/#pricing" },
   ];
 
   return (
@@ -23,11 +23,11 @@ const Header = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="font-serif text-2xl lg:text-3xl font-semibold text-foreground tracking-tight">
               Organized<span className="text-primary">Life</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
