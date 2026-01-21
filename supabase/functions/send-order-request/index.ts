@@ -61,13 +61,6 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 
-const safeJsonParse = (input: string) => {
-  try {
-    return JSON.parse(input);
-  } catch {
-    return input;
-  }
-};
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
@@ -101,18 +94,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (!RESEND_API_KEY) {
+      console.error("RESEND_API_KEY not configured");
       return new Response(
         JSON.stringify({
-          error:
-            "Email service is not configured (missing RESEND_API_KEY). Please update the key and try again.",
-          debug: {
-            resendKeyLength: 0,
-            resendKeyPrefix: "",
-            resendKeyLooksValid: false,
-          },
+          error: "Email service is temporarily unavailable. Please try again later.",
         }),
         {
-          status: 500,
+          status: 503,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
@@ -183,52 +171,17 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!ownerEmailRes.ok) {
       const errorText = await ownerEmailRes.text();
+      console.error("Resend API error:", errorText, { status: ownerEmailRes.status });
 
-      // Some Resend errors return 400 instead of 401 for invalid keys.
-      if (
-        ownerEmailRes.status === 401 ||
-        (ownerEmailRes.status === 400 && /api key is invalid/i.test(errorText))
-      ) {
-        return new Response(
-          JSON.stringify({
-            error:
-              "Email service rejected the request. The configured Resend API key appears invalid. Please generate a fresh key and update RESEND_API_KEY.",
-            resendError: safeJsonParse(errorText),
-            debug: {
-              resendKeyPrefix: RESEND_API_KEY.slice(0, 3),
-              resendKeyLength: RESEND_API_KEY.length,
-              resendKeyLooksValid:
-                RESEND_API_KEY.startsWith("re_") && RESEND_API_KEY.length >= 10,
-            },
-          }),
-          {
-            status: 500,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
-        );
-      }
-
-      if (ownerEmailRes.status === 401) {
-        return new Response(
-          JSON.stringify({
-            error:
-              "Email service rejected the request (401). The Resend API key being used by the backend appears invalid.",
-            resendError: safeJsonParse(errorText),
-            debug: {
-              resendKeyPrefix: RESEND_API_KEY.slice(0, 3),
-              resendKeyLength: RESEND_API_KEY.length,
-              resendKeyLooksValid:
-                RESEND_API_KEY.startsWith("re_") && RESEND_API_KEY.length >= 10,
-            },
-          }),
-          {
-            status: 500,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
-        );
-      }
-
-      throw new Error(`Failed to send owner email: ${errorText}`);
+      return new Response(
+        JSON.stringify({
+          error: "Failed to send email. Please try again or contact support.",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
     // Send confirmation email to customer
@@ -271,10 +224,15 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error in send-order-request function:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    return new Response(
+      JSON.stringify({
+        error: "Unable to process your request. Please try again later.",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
   }
 };
 
