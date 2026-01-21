@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Instagram, Twitter, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -10,7 +9,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid md:grid-cols-3 gap-12"
+          className="grid md:grid-cols-2 gap-12"
         >
           {/* Brand */}
           <div>
@@ -40,26 +39,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Connect */}
-          <div>
-            <h4 className="font-serif text-lg font-medium mb-4">Connect</h4>
-            <div className="flex gap-4">
-              {[
-                { icon: Instagram, label: "Instagram" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Mail, label: "Email" },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href="#"
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
-          </div>
         </motion.div>
 
         {/* Bottom Bar */}
